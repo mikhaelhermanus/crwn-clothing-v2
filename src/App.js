@@ -1,42 +1,31 @@
+import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { UserContext } from "./contexts/user.context";
+
+import Home from "./routes/home/home.component";
+import Navigation from "./routes/navigation/navigation.component";
+import Authentication from "./routes/authentication/authentication.component";
+
+const Shop = () => {
+  return <h1>I am the shop page</h1>;
+};
+
 const App = () => {
+  const { currentUser } = useContext(UserContext);
   return (
-    <div className='categories-container'>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Hats</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Jackets</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Sneakers</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Womens</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-      <div className='category-container'>
-        {/* <img /> */}
-        <div className='category-body-container'>
-          <h2>Mens</h2>
-          <p>Shop Now</p>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route index element={<Home />} />
+        <Route path="shop" element={<Shop />} />
+        <Route
+          path="auth"
+          element={
+            currentUser ? <Navigate to="/" replace /> : <Authentication />
+          }
+        />
+      </Route>
+    </Routes>
   );
 };
 
